@@ -1,16 +1,22 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import useFetch from "../../hooks/useFetch";
 import { ItemType } from "../../models/IItem";
 import Item from "../item/Item";
 import "./List.css";
+
+const formatDate = (date: Date) => {
+  return date.toISOString().split("T")[0];
+}
 
 const List: React.FC = () => {
   const url = "https://api.github.com/gists/public";
   
   //query parameters
   //since query patern -> YYYY-MM-DDTHH:MM:SSZ
-  const [since, setSince] = useState<string>(new Date("2021-09-10").toISOString());
-  const [page, setPage] = useState<number>(1);
+  let lastMonth = new Date();
+  lastMonth.setMonth(lastMonth.getMonth()-1);
+  const [since, setSince] = useState(formatDate(lastMonth));
+  const [page, setPage] = useState(1);
   const perPage = 30;
 
   //hook for infinite scroll
@@ -43,10 +49,10 @@ const List: React.FC = () => {
   }
 
   return (
-    <>
-      <form className="form" onSubmit={handleSubmit}>
+    <div className="container">
+      <form className="form-date" onSubmit={handleSubmit}>
         <label htmlFor="since"> List of items since: </label>
-        <input type="date" id="since" max={new Date().toISOString().split("T")[0]}/>
+        <input type="date" id="since" defaultValue={formatDate(lastMonth)} max={formatDate(new Date())}/>
         <button type="submit">Submit</button>
       </form>
 
@@ -54,16 +60,16 @@ const List: React.FC = () => {
           {list.map((item: ItemType, index: number) => 
               {
                   if (list.length === index + 1) {
-                      return <div ref={lastItemRef} key={item.id}> <Item item={item}/> </div>
-                    } else {
-                      return <div key={item.id}><Item item={item}/></div>
-                    }
+                    return <div ref={lastItemRef} key={item.id}> <Item item={item}/> </div>
+                  } else {
+                    return <div key={item.id}><Item item={item}/></div>
+                  }
               }
           )}
       </ul>
       {loading && <p>Loading...</p>}
       {error && <p>Error!</p>}
-    </>
+    </div>
   )
 };
 

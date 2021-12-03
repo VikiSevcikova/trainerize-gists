@@ -1,11 +1,22 @@
+.container{
+    margin: 0 10px;
+}
+
 ul{
     padding: 0;
 }
 
-.form{
+.form-date{
     padding: 20px;
+    text-align: center;
 }
 
-.form button{
+.form-date button{
     margin: 0 10px;
+}
+
+@media screen and (min-width: 600px) {
+    .form-date{
+        text-align: left;
+    }
 }

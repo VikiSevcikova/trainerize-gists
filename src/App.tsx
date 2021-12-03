@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import List from './components/list/List';
 
 function App() {

@@ -8,8 +8,8 @@ const useFetch = (
   page: number,
   perPage: number
 ) => {
-  const [loading, setLoading] = useState<Boolean>(true);
-  const [error, setError] = useState<Boolean>(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
   const [list, setList] = useState<ItemType[]>([]);
 
   const fetchData = useCallback(() => {

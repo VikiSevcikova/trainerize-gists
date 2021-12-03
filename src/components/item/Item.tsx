@@ -4,11 +4,13 @@ import "./Item.css";
 import PopUp from "../popup/PopUp";
 
 const Item : React.FC<ItemProps> = ({item}) => {
-    const [show, setShow] = useState<Boolean>(false);
+    const [show, setShow] = useState(false);
 
     useEffect(()=>{
-        if(show){
-            setTimeout(()=>setShow(false), 1000);
+        let timer = setTimeout(()=>setShow(false), 1000);
+        
+        return () => {
+            clearTimeout(timer);
         }
     },[show])
 
