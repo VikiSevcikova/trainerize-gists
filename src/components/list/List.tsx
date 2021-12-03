@@ -17,9 +17,6 @@ const List: React.FC = () => {
   const { loading, error, list } = useFetch(url, since, page, perPage);
   //used useRef because it persists after each render
   const observer = useRef<IntersectionObserver>();
-  console.log("list",list);
-  console.log("page",page)
-  console.log("error",error)
 
   //lastItemRef is set to the last item in the list
   const lastItemRef = useCallback(node => {

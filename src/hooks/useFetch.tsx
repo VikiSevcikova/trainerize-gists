@@ -13,8 +13,6 @@ const useFetch = (
   const [list, setList] = useState<ItemType[]>([]);
 
   const fetchData = useCallback(() => {
-    console.log("FETCH");
-    console.log("since", since);
     setLoading(true);
     setError(false);
 
@@ -40,7 +38,6 @@ const useFetch = (
           image: d.owner.avatar_url,
           names: Object.keys(d.files),
         }));
-        console.log("newList", newList);
         setList((prevData: ItemType[]) => [...prevData, ...newList]);
         setLoading(false);
       })
