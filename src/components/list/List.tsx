@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import useFetch from "../../hooks/useFetch";
 import { ItemType } from "../../models/IItem";
 import Item from "../item/Item";
@@ -35,23 +35,37 @@ const List: React.FC = () => {
     })
     //the new last item in the list is set to be observed
     if (node) observer.current.observe(node)
-  }, [loading])
+  }, [loading]);
+
+  const handleSubmit = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    const target = e.target as typeof e.target & {
+      since: { value: string }
+    };
+    setSince(target.since.value);
+  }
 
   return (
     <>
-        <ul>
-            {list.map((item: ItemType, index: number) => 
-                {
-                    if (list.length === index + 1) {
-                        return <div ref={lastItemRef} key={item.id}> <Item item={item}/> </div>
-                      } else {
-                        return <div key={item.id}><Item item={item}/></div>
-                      }
-                }
-            )}
-        </ul>
-        {loading && <p>Loading...</p>}
-        {error && <p>Error!</p>}
+      <form className="form" onSubmit={handleSubmit}>
+        <label htmlFor="since"> List of items since: </label>
+        <input type="date" id="since" max={new Date().toISOString().split("T")[0]}/>
+        <button type="submit">Submit</button>
+      </form>
+
+      <ul>
+          {list.map((item: ItemType, index: number) => 
+              {
+                  if (list.length === index + 1) {
+                      return <div ref={lastItemRef} key={item.id}> <Item item={item}/> </div>
+                    } else {
+                      return <div key={item.id}><Item item={item}/></div>
+                    }
+              }
+          )}
+      </ul>
+      {loading && <p>Loading...</p>}
+      {error && <p>Error!</p>}
     </>
   )
 };

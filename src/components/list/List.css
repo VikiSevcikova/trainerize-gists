@@ -1,3 +1,11 @@
 ul{
     padding: 0;
 }
+
+.form{
+    padding: 20px;
+}
+
+.form button{
+    margin: 0 10px;
+}

@@ -51,6 +51,10 @@ const useFetch = (
       });
   }, [url, since, page, perPage]);
 
+  useEffect(()=>{
+    setList([]);
+  },[since])
+
   useEffect(() => {
     fetchData();
   }, [page, fetchData]);
